@@ -1,5 +1,30 @@
+rs.initiate()
 db.createUser({user: "m103-admin", pwd: "m103-pass", roles: [{role: "root", db: "admin"}]})
 mongo --host "m103-repl/192.168.103.100:27001" -u "m103-admin" -p "m103-pass" --authenticationDatabase "admin"
 rs.add("192.168.103.100:27002")
 rs.add("192.168.103.100:27003")
 
+storage:
+  dbPath: /var/mongodb/db/1
+net:
+  bindIp: 192.168.103.100,localhost
+  port: 27001
+security:
+  authorization: enabled
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/mongod1.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-repl
+  
+  
+Creating the keyfile and setting permissions on it:
+
+sudo mkdir -p /var/mongodb/pki/
+sudo chown vagrant:vagrant /var/mongodb/pki/
+openssl rand -base64 741 > /var/mongodb/pki/m103-keyfile
+chmod 600 /var/mongodb/pki/m103-keyfile
