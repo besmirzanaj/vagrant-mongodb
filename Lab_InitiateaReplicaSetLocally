@@ -28,3 +28,6 @@ sudo mkdir -p /var/mongodb/pki/
 sudo chown vagrant:vagrant /var/mongodb/pki/
 openssl rand -base64 741 > /var/mongodb/pki/m103-keyfile
 chmod 600 /var/mongodb/pki/m103-keyfile
+
+m103.mongodb.university:27014
+
