@@ -58,10 +58,19 @@ db.adminCommand({shardCollection: "m103.products", key: {sku: 1 }})
 
 mongoimport -d m103 -c products /shared/products.part2.json
 
+MongoDB Enterprise mongos> db.getSiblingDB("m103").products.find({"sku" : 21572585 })
+{
+	"_id": ObjectId("573f71c8f29313caab8ba50c"),
+	"sku": 21572585,
+	"name": "Star Trek: The Motion Picture/Star Trek II: The Wrath
+of Kahn (DVD)",
+	"type": "Movie",
+	"regularPrice": 12.99,
+	"salePrice": 12.99,
+	"shippingWeight": "0.25"
+}
 
 
 
-
-
-
+validate_lab_document_chunks m103.products-sku_23153496
 
