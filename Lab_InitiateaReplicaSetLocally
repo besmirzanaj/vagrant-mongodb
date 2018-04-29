@@ -1,4 +1,5 @@
 rs.initiate()
+use admin
 db.createUser({user: "m103-admin", pwd: "m103-pass", roles: [{role: "root", db: "admin"}]})
 mongo --host "m103-repl/192.168.103.100:27001" -u "m103-admin" -p "m103-pass" --authenticationDatabase "admin"
 rs.add("192.168.103.100:27002")
@@ -42,13 +43,20 @@ mongoimport --drop \
 
 
 
+###########
+
+sharding
 
 
 
+mongo --port 27002 -u "m103-admin" -p "m103-pass" --authenticationDatabase "admin"
 
 
 
+db.products.createIndex({"sku" : 1})
+db.adminCommand({shardCollection: "m103.products", key: {sku: 1 }})
 
+mongoimport -d m103 -c products /shared/products.part2.json
 
 
 
